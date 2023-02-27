@@ -1,0 +1,39 @@
+#lang sicp
+
+(define (cube x) (* x x x))
+
+(define (p x)
+  (display "call p, arg = ")
+  (display x)
+  (- (* 3 x) (* 4 (cube x))))
+
+(define (sine angle)
+  (if (not (> (abs angle) 0.1))
+      angle
+      (p (sine (/ angle 3.0)))))
+
+(sine 12.15)
+
+;and the return is:
+call p, arg = 0.049999999999999996
+call p, arg = 0.1495
+call p, arg = 0.4351345505
+call p, arg = 0.9758465331678772
+call p, arg = -0.7895631144708228
+-0.39980345741334
+;so p is called by 5 times
+
+;When evaluating sine(a), a is divided by 3.0 each time.sine is a recursive procedure, a / 3.0 per recurrence.
+;The complexity of the space and time of the sine is O(logA), and the logarithm increases.
+;Every time a is increased by three times, the number of calls to p is increased by one.
+
+(sine 1),     p is called 3 times。
+(sine 3),     p is called 4 times。
+(sine 9),     p is called 5 times。
+(sine 27),    p is called 6 times。
+(sine 81),    p is called 7 times。
+(sine 243),   p is called 8 times。
+(sine 729),   p is called 9 times。
+(sine 2187),  p is called 10 times。
+(sine 6561),  p is called 11 times。
+(sine 19683), p is called 12 times。
