@@ -1,4 +1,4 @@
-#lang sicp
+#lang racket
 
 (define (square x) (* x x))
 (define (runtime) (current-inexact-milliseconds)) 
