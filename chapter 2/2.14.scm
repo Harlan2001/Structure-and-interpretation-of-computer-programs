@@ -1,0 +1,30 @@
+;Lem is right. Here's the code:
+(define (part1 r1 r2)
+  (div-interval (mul-interval r1 r2)
+                (add-interval r1 r2)))
+
+(define (part2 r1 r2)
+  (let ((one (make-interval 1 1)))
+    (div-interval one
+                  (add-interval (div-interval one r1)
+                                (div-interval one r2)))))
+
+(define A (make-center-percent 20 2))
+(define B (make-center-percent 10 2))
+
+(print-interval A)
+(print-interval B)
+(print-interval (part1 A B))
+(print-interval (part2 A B))
+(print-interval (div-interval A A))
+(print-interval (div-interval A B))
+
+
+;In the code,
+A = [19.6, 20.4]
+B = [9.8, 10.2]
+;calculation
+(part1 A B) = [6.277124183006538, 7.077551020408162]
+(part2 A B) = [6.533333333333334, 6.799999999999999]
+;As you can see, the results of part1 and part2 are different.
+;part2 has a narrower range and is a better estimate.
