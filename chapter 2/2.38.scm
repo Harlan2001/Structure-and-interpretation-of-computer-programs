@@ -1,0 +1,27 @@
+#lang racket
+
+(define (fold-right op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (fold-right op initial (cdr sequence)))))
+
+(define (fold-left op initial sequence)
+  (define (iter result rest)
+    (if (null? rest)
+        result
+        (iter (op result (car rest))
+              (cdr rest))))
+  (iter initial sequence))
+
+;;;;;;;;;;;;;
+(fold-right / 1 (list 1 2 3))
+(fold-left / 1 (list 1 2 3))
+(fold-right list null (list 1 2 3))
+(fold-left list null (list 1 2 3))
+(fold-right cons null (list 1 2 3))
+(fold-left cons null (list 1 2 3))
+(fold-left (lambda (x y) (cons y x)) null (list 1 2 3))
+
+;For op to guarantee that fold-right and fold-left have the same effect on any sequence, op must have the commutative law.So op x y is the same thing as op y x.
+;For example, addition (+) or multiplication (*), and or, are commutative.The fold-right and the fold-left are evaluated the same.
