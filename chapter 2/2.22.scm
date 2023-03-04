@@ -1,0 +1,47 @@
+(define (square-list items)
+  (define (iter things answer)
+    (if (null? things)
+        answer
+        (iter (cdr things) 
+              (cons (square (car things))
+                    answer))))
+  (iter items null))
+;Use the above code to evaluate (square-list (list 1, 2, 3, 4)) and expand the calculation process.
+(square-list (list 1 2 3 4))
+(iter '(1 2 3 4) '())
+(iter '(2 3 4) (cons 1 '()))
+(iter '(3 4) (cons 4 (cons 1 '())))
+(iter '(4) (cons 9 (cons 4 (cons 1 '()))))
+(iter '() (cons 16 (cons 9 (cons 4 (cons 1 '())))))
+(cons 16 (cons 9 (cons 4 (cons 1 '()))))
+'(16 9 4 1)
+;We can see that every iteration.It takes the first number of things, calculates square, and sticks it in front of the answer.So the order is reversed.
+
+
+
+;;;;;;
+(define (square-list items)
+  (define (iter things answer)
+    (if (null? things)
+        answer
+        (iter (cdr things) 
+              (cons answer 
+                    (square (car things))))))
+  (iter items null))
+;Use the modified code to evaluate (square-list (list 1, 2, 3, 4)), and expand the calculation process.
+(square-list (list 1 2 3 4))
+(iter '(1 2 3 4) '())
+(iter '(2 3 4) (cons '() 1))
+(iter '(3 4) (cons (cons '() 1) 4))
+(iter '(4) (cons (cons (cons '() 1) 4) 9))
+(iter '() (cons (cons (cons (cons '() 1) 4) 9) 16))
+(cons (cons (cons (cons '() 1) 4) 9) 16)
+'((((() . 1) . 4) . 9) . 16)
+;After modification, although the numbers are in the right order, the result of evaluation is not a list.In the DrRacket.
+(cons (cons (cons (cons '() 1) 4) 9) 16)
+;The evaluation result of is expressed as
+'((((() . 1) . 4) . 9) . 16)
+;And we can know that 
+(cons 1 (cons 4 (cons 9 (cons 16 '()))))
+;the result of this expression is list
+'(1 4 9 16)
