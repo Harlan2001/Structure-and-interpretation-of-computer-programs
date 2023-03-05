@@ -1,0 +1,34 @@
+;Use Exercise 2.69 to complete it.
+#lang racket
+
+(require "exercise_2_69.scm")
+
+(define (encode-messages messages tree)
+  (if (null? messages)
+      '()
+      (append (encode (car messages) tree) 
+              (encode-messages (cdr messages) tree))))
+
+(define tree (generate-huffman-tree '((A    2) 
+                                      (NA   16) 
+                                      (BOOM 1)
+                                      (SHA  3) 
+                                      (GET  2) 
+                                      (YIP  9) 
+                                      (JOB  2)
+                                      (WAH  1))))
+
+(define messages '((GET A JOB)
+                   (SHA NA NA NA NA NA NA NA NA)
+                   (GET A JOB)
+                   (SHA NA NA NA NA NA NA NA NA)
+                   (WAH YIP YIP YIP YIP YIP YIP YIP YIP YIP)
+                   (SHA BOOM)))
+
+(encode-messages messages tree)
+(decode (encode-messages messages tree) tree)
+(length (encode-messages messages tree))      ;; 84
+
+;The result can be obtained, the encoded binary bit length is 84.
+;If fixed-length coding is used, there are eight symbols in the alphabet, so each symbol needs at least three bits of binary.There are 36 symbols in the original text, so fixed-length encoding is adopted, and the binary bit length is 36 * 3 = 108.
+;It can be seen that huffman encoding saves 24 binary bits compared with fixed length encoding.
