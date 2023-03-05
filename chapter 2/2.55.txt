@@ -1,0 +1,7 @@
+As mentioned in the notes on page P97, 'a 'is just a short way of saying (quote a).Therefore
+(car ''abracadabra)
+Actually equivalent to
+(car (quote (quote abracadabra)))
+The above form may not be obvious.Expand only one quote and leave the other quote.It can also be written as
+(car '(quote abracadabra))
+So car is used to fetch the first element in the table, which prints out quote.
