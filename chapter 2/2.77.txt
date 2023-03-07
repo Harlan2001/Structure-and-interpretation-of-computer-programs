@@ -1,0 +1,39 @@
+This problem can be modified and verified on the basis of the code of general arithmetic operations.
+The following code creates object z in Figure 2-24
+(define z (make-complex-from-real-imag 3 4))
+z
+
+In DrRacket, the following information is displayed
+'(complex rectangular 3 . 4)
+equals to 
+(cons 'complex (cons 'rectangular (cons 3 4)))
+
+As you can see, there are two layers of type-tag nesting.First, type-tag was complex, then nested type-tag was rectangular.
+If you haven't already called (put 'magnitude '(complex) magnitude), call (magnitude z).Will call in turn
+(magnitude z)
+(magnitude '(complex rectangular 3 . 4))
+(apply-generic 'magnitude '(complex rectangular 3 . 4))
+(get 'magnitude (map type-tag '((complex rectangular 3 . 4))))
+(get 'magnitude '(complex))
+
+In this case (get 'magnitude '(complex)) is #f.This triggers an error message in apply-generic.
+No method for these types -- APPLY-GENERIC (magnitude (complex))
+
+If we add (put 'magnitude '(complex) magnitude) to the complex installation package function install-complex-package, we can trace the function calls
+(magnitude z)
+(magnitude '(complex rectangular 3 . 4))
+(apply-generic 'magnitude '(complex rectangular 3 . 4))
+(get 'magnitude '(complex))
+(apply magnitude (map contents '((complex rectangular 3 . 4))))
+
+(magnitude '(rectangular 3 . 4))
+(apply-generic 'magnitude '(rectangular 3 . 4))
+(get 'magnitude '(rectangular))
+(apply magnitude-rectangular (map contents '((rectangular 3 . 4))))
+(magnitude-rectangular '(3 . 4))
+5
+
+In the above function call.Magnitude-rectangular refers to the magnitude function defined in install-rectangular-package, which is recorded as magnitude-rectangular in order to avoid the misdirection of the same name.
+You can see that apply-generic is called twice.
+One is to assign to (get 'magnitude '(complex))
+The other time was assigned to (get 'magnitude '(rectangular)).
