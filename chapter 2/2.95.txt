@@ -1,0 +1,52 @@
+On the code from Exercise 2.94, add the following statement:
+(define P1  (make-polynomial 'x '((2 1) (1 -2) (0 1))))
+(define P2  (make-polynomial 'x '((2 11) (0 7))))
+(define P3  (make-polynomial 'x '((1 13) (0 5))))
+
+(define Q1 (mul P1 P2))
+(define Q2 (mul P1 P3))
+
+(print-poly "gcd(Q1,Q2)" (greatest-common-divisor Q1 Q2))The output is
+gcd(Q1,Q2)
+(polynomial x (2 1458/169) (1 -2916/169) (0 1458/169))
+(1458/169*x^2 + (-2916/169)*x + 1458/169)
+Comparing the infix expression of gcd(Q1,Q2) and P1, there is
+gcd(Q1,Q2): 1458/169*x^2 + (-2916/169)*x + 1458/169
+P1:         x^2 + (-2)*x + 1
+Q1 and Q2 for GCD, compared with P1, are more complicated, each term has an extra fraction of 1458/169.
+To understand the reason for this score, you can print some debugging information in gcd-terms with the output as.
+call gcd-terms
+a: ((4 11) (3 -22) (2 18) (1 -14) (0 7))
+b: ((3 13) (2 -21) (1 3) (0 5))
+
+call gcd-terms
+a: ((3 13) (2 -21) (1 3) (0 5))
+b: ((2 1458/169) (1 -2916/169) (0 1458/169))
+
+call gcd-terms
+a: ((2 1458/169) (1 -2916/169) (0 1458/169))
+b: ()
+Among them
+(11 (4) (3-22) 18 (2) (1-14) 7 (0)) for (term - the list Q1)
+((3 13) (2-21) (1 3) (0 5)) is (term-list Q2)
+As you can see, gcd-terms is called three times.On the second call, the b argument already has a fraction.The b argument on the second call is the same argument on the first call
+(remainder-terms a b)
+To do this, we use div-terms to print the output of a, b, and div
+a:   ((4 11) (3 -22) (2 18) (1 -14) (0 7))
+b:   ((3 13) (2 -21) (1 3) (0 5))
+a/b: ((1 11/13) (0 -55/169))
+a%b: ((2 1458/169) (1 -2916/169) (0 1458/169))
+
+Ival-terms is used to find the remainder of a polynomial.The remainder is defined using a - b * (a/b).If quotient a/b has a fraction, the remainder will naturally have a fraction.
+Observe that the fraction 11/13 appears in the first term of the quotient.Analyze the div-terms code, when L1, L2 first item appears in the code
+t1 = (4 11), indicating order = 4 and coeff = 11
+t2 = (3 13), which means order = 3 and coeff = 13
+div-terms has these two lines for order and coeff for the new item
+(new-c (div (coeff t1) (coeff t2)))
+(new-o (- (order t1) (order t2)))
+The evaluation procedure of the following expression is
+(new-c (div (coeff t1) (coeff t2)))
+(new-c (div 11 13))
+(new-c (/ 11 13))
+(new-c 11/13)
+So we know why the scores are there.In Scheme, when two integers are evaluated using /, an exact fraction (rational number) is obtained.
