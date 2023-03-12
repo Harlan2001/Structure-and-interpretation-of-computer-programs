@@ -2,7 +2,7 @@
 
 (require "stream.scm")
 (require "infinite_stream.scm")
-(require "exercise_3_59.scm")
+(require "3.59.scm")
 (provide mul-series)
 
 ; s1 = (car-s1 + cdr-s1), s2 = (car-s2 + cdr-s2)
