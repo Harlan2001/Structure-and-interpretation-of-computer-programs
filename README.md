@@ -9,7 +9,4 @@ Besides, i decide to write the journal of the process that i learn everyday.Not 
 
 I usually read blogs on CSDN and github. but i don't usually write anything or share my code on any internet forum. I guess i am too shy and afraid of being judged or commented by others.
 
-Also maybe i will write something personal in the journal to share it with my classmates and friends on github.
-
-Ultimately, when i read those things after colleage, i can still recall these beautiful memories
 Thank you
