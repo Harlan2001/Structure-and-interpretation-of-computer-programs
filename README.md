@@ -7,6 +7,6 @@ I write the code on DrRocket, and for most literal part i use the transilation t
 
 Besides, i decide to write the journal of the process that i learn everyday.Not only for the record of learning, but also as a journal for imporving my english expression.
 
-I usually read blogs on CSDN and github. but i don't usually write anything or share my code on any internet forum. I guess i am too shy and afraid of being judged or commented by others.
+I usually read blogs on CSDN or project on github, but i don't usually write anything or share my code on any internet forum. I am glad to do this to share the things that i am doing with my classmates and friends on github.
 
 Thank you
